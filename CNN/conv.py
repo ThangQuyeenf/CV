@@ -37,7 +37,7 @@ def conv2d(X, F, s = 1, p = 0):
   X_pad = np.pad(X, pad_width=p, mode='constant', constant_values=0)
   for i in range(w2):
     for j in range(h2):
-      Y[i, j] = np.sum(X_pad[i*s:i*s+f, j*s:j*s+f] * F)
+      Y[i, j] = np.abs(np.sum(X_pad[i*s:i*s+f, j*s:j*s+f] * F))
   return Y
 
 if __name__ == '__main__':
@@ -51,12 +51,15 @@ if __name__ == '__main__':
   F1 = np.array([[-1, -1, -1,], [0, 0, 0], [1, 1, 1]])
 
   Y1 = conv2d(X, F1)
+  plt.figure(figsize=(10,8))
+  plt.subplot(1, 2, 1)
   plt.imshow(Y1)
   plt.title("Y1")
 
 
   F2 = np.array([[1, 0, -1], [1, 0, -1], [1, 0, -1]])
   Y2 = conv2d(X, F2, s = 3, p = 0)
+  plt.subplot(1, 2, 2)
   plt.imshow(Y2)
   plt.title("Y2")
   plt.show()
